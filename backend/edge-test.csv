@@ -1,0 +1,6 @@
+Full Name,Email Address,Phone Number,Status,Notes,Source
+John Doe,john@gmail.com,9876543210,Interested,"Call me tomorrow",leads_on_demand
+Alice Smith,alice@gmail.com;alice.work@gmail.com,9876543211;9123456789,Not Interested,"Do not call again",eden_park
+Bob,,9876543212,No Answer,"Could not connect",meridian_tower
+No Contact,,,Interested,"No contact details",leads_on_demand
+Raj Patel,raj@gmail.com,9876543213,Sale Completed,"Payment received",sarjapur_plots
