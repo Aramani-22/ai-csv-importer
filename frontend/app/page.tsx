@@ -10,6 +10,8 @@ interface Result {
   imported?: number;
   skipped?: number;
   records?: any[];
+  error?: string;
+  message?: string;
 }
 
 export default function Home() {
@@ -124,15 +126,45 @@ export default function Home() {
 
     formData.append("file", file);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    console.log("API URL:", apiUrl);
+
+    if (!apiUrl) {
+      throw new Error(
+        "NEXT_PUBLIC_API_URL is not configured."
+      );
+    }
+
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/upload`,
+      `${apiUrl}/upload`,
       {
         method: "POST",
         body: formData,
       }
     );
 
-    const data = await response.json();
+    const responseText = await response.text();
+
+    console.log(
+      "upload status:",
+      response.status
+    );
+
+    console.log(
+      "upload response:",
+      responseText
+    );
+    
+    let data: Result;
+
+    try{
+      data = JSON.parse(responseText);
+    } catch {
+      throw new Error(
+        `Backend returned non-JSON response (${response.status}): ${responseText.slice(0, 300)}`
+      );
+    }
 
     if (!response.ok) {
       throw new Error(
@@ -143,6 +175,7 @@ export default function Home() {
     }
 
     setResult(data);
+    
   } catch (err: any) {
     console.error(err);
 
